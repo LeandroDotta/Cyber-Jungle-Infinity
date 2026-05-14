@@ -35,7 +35,7 @@ public class SplashSequencer : MonoBehaviour
 
     private void StartGame()
     {
-        transition.LoadScene(SceneNames.GAME);
+        transition.LoadScene(SceneNames.MAIN_MENU);
     }
 
     private void OnValidate() 
