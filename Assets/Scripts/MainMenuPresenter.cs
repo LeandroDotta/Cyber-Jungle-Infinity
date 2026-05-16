@@ -31,7 +31,7 @@ public class MainMenuPresenter : MonoBehaviour
 
     private void ClickPlay()
     {
-        transition.LoadScene(SceneNames.GAME);
+        transition.LoadScene(SceneNames.LEVEL_PREFIX+"1");
         view.DisableAllButtons();
     }
 
