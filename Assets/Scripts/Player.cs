@@ -3,10 +3,12 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    [SerializeField] private float speed = 10;
+
     [Header("Sound Effects")]
-    public SoundEffect soundShot;
-    public SoundEffect soundDamage;
-    public SoundEffect soundLoose;
+    [SerializeField] private SoundEffect soundShot;
+    [SerializeField] private SoundEffect soundDamage;
+    [SerializeField] private SoundEffect soundLoose;
 
     private GameManager gameManager;
     private Animator animator;
@@ -35,6 +37,8 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
+        Move();
+        ClampPositionToScreen();
         UpdateAnimations(controller.Direction);
     }
 
@@ -83,5 +87,29 @@ public class Player : MonoBehaviour
     private void ShowGameOver()
     {
         gameManager.GameOver();
+    }
+
+    private void Move()
+    {
+        transform.Translate(speed * Time.deltaTime * controller.Direction);
+    }
+
+    private void ClampPositionToScreen()
+    {
+        Vector3 maxPosition = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, 0));
+        Vector3 minPosition = Camera.main.ScreenToWorldPoint(new Vector3(0, 0, 0));
+
+        Vector2 extents = coll.bounds.extents;
+
+        minPosition.x += extents.x;
+        minPosition.y += extents.y;
+
+        maxPosition.x -= extents.x;
+        maxPosition.y -= extents.y;
+
+        Vector3 position = transform.position;
+        position.x = Mathf.Clamp(position.x, minPosition.x, maxPosition.x);
+        position.y = Mathf.Clamp(position.y, minPosition.y, maxPosition.y);
+        transform.position = position;
     }
 }
