@@ -24,13 +24,17 @@ public class RatingBar : MonoBehaviour
         yield return new WaitForSeconds(2f);
         ratingStar1.gameObject.SetActive(true);
         ratingStar1.SetBool("enabled", rating >= 1);
+        ratingStar1.SetTrigger("show");
 
         yield return new WaitForSeconds(0.3f);
         ratingStar2.gameObject.SetActive(true);
         ratingStar2.SetBool("enabled", rating >= 2);
+        ratingStar2.SetTrigger("show");
 
         yield return new WaitForSeconds(0.3f);
         ratingStar3.gameObject.SetActive(true);
         ratingStar3.SetBool("enabled", rating >= 3);
+        ratingStar3.SetTrigger("show");
+
     }
 }

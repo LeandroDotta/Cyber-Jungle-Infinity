@@ -18,7 +18,7 @@ public class GameManager : MonoBehaviour
     {
         levelManager = GetComponent<LevelManager>();
 
-        scoreManager = new ScoreTracker(GetComponentsInChildren<Enemy>(true));
+        scoreManager = new ScoreTracker(GetComponentsInChildren<EnemyPlaceholder>(true));
 
         panelInGame.SetActive(false);
         panelStart.gameObject.SetActive(true);
@@ -34,7 +34,7 @@ public class GameManager : MonoBehaviour
 
     private void OnEnemyLoose(Enemy enemy)
     {
-        scoreManager.Score += enemy.score;
+        scoreManager.Score += enemy.data.ScorePoints;
         textScore.text = scoreManager.Score.ToString();
     }
 

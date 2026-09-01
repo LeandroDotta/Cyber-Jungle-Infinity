@@ -12,32 +12,36 @@ public class LevelManager : MonoBehaviour
         StartNextWave();
     }
 
-    private void OnDisable()
+    public void StartNextWave()
     {
-        StopAllCoroutines();
+        int nextWave = currentWave + 1;
+
+        if (nextWave >= waves.Length)
+        {
+            SendMessage("OnLevelEnd", SendMessageOptions.RequireReceiver);
+            currentWave = -1;
+            return;
+        }
+        
+        StartWave(nextWave);
     }
 
-    private void OnWaveEnd()
+    public void StartWave(int waveIndex)
     {
-        if (!enabled)
+        CancelInvoke();
+
+        if (waveIndex < 0 || waveIndex >= waves.Length)
         {
+            Debug.LogError($"[LevelManager] Invalid Wave Index ({waveIndex})");
             return;
         }
 
-        StartNextWave();
-    }
+        EnemyWave wave = waves[waveIndex];
+        wave.gameObject.SetActive(true);
+        wave.StartWave();
 
-    private void StartNextWave()
-    {
-        currentWave++;
-        
-        if (currentWave < waves.Length)
-        {
-            waves[currentWave].gameObject.SetActive(true);
-        }
-        else
-        {
-            SendMessage("OnLevelEnd", SendMessageOptions.RequireReceiver);
-        }
+        currentWave = waveIndex;
+
+        Invoke(nameof(StartNextWave), wave.Duration);
     }
 }
