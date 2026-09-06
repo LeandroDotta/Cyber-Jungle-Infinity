@@ -16,7 +16,7 @@ public struct EnemyState
 
 public class Enemy : MonoBehaviour
 {
-    public int score;
+    public EnemyData data;
     public EnemyState[] states;
 
     [Header("Sound Effects")]

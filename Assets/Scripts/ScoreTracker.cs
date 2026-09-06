@@ -3,11 +3,11 @@ public class ScoreTracker
     public int Score { get; set; }
     public int MaxScore { get; private set; }
 
-    public ScoreTracker(Enemy[] levelEnemies)
+    public ScoreTracker(EnemyPlaceholder[] levelEnemies)
     {
-        foreach (Enemy enemy in levelEnemies)
+        foreach (EnemyPlaceholder enemy in levelEnemies)
         {
-            MaxScore += enemy.score;
+            MaxScore += enemy.Data.ScorePoints;
         }
     }
 
